@@ -303,11 +303,21 @@ app.get("/health", (_req, res) => {
 
 // MCP endpoint — Claude.ai connects here
 app.all("/mcp", async (req, res) => {
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined, // Stateless mode
-  });
-  await server.connect(transport);
-  await transport.handleRequest(req, res, req.body);
+  try {
+    const transport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: undefined, // Stateless mode
+    });
+    res.on("close", () => {
+      transport.close().catch(() => {});
+    });
+    await server.connect(transport);
+    await transport.handleRequest(req, res, req.body);
+  } catch (error) {
+    console.error("MCP error:", error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: String(error) });
+    }
+  }
 });
 
 const PORT = parseInt(process.env.PORT ?? "3000", 10);
