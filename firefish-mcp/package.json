@@ -1,24 +1,25 @@
 {
   "name": "firefish-mcp",
   "version": "1.0.0",
-  "description": "Firefish CRM MCP Server for Ceek Talent / Claude.ai",
+  "description": "MCP server for Firefish recruitment CRM - Jobs, Adverts, and Candidates API",
   "main": "dist/index.js",
+  "bin": {
+    "firefish-mcp": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "tsc --watch"
   },
+  "keywords": ["mcp", "firefish", "recruitment", "crm"],
+  "author": "Ceek Talent",
+  "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.0"
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.0.0",
-    "ts-node": "^10.9.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3"
   }
 }
